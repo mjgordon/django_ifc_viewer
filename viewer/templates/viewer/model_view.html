@@ -1,0 +1,44 @@
+<html lang="en">
+  <head>
+    {% load static %}
+    
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    
+    <script type="importmap">
+    {
+    "imports": {
+        "three" : "https://cdn.skypack.dev/three",
+        "webifc" : "https://cdn.skypack.dev/web-ifc-three",
+        "threejs-orbit-controls": "https://cdn.skypack.dev/threejs-orbit-controls"
+    }  
+    } 
+    </script>
+
+    
+    <link rel="stylesheet" href="{% static 'viewer/style.css' %}">
+
+    <script type="module" src="{% static 'viewer/viewer.js' %}"></script>    
+
+  </head>
+
+  
+  <body>
+    
+    <input type="file" name="load" id="file-input" />
+    
+  
+    {% if model %}
+
+    {% else %}
+        <p>No model provided</p>
+    {% endif %}
+
+    <canvas id="three-canvas"></canvas>
+
+
+  </body>
+</html>
+

@@ -1,0 +1,10 @@
+__pycache__
+db.sqlite3
+.env
+
+/test_data
+
+*.log
+*.pot
+*.pyc
+*.wasm
