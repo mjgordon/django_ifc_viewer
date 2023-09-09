@@ -4,15 +4,18 @@
 </head>
 
 <body>
-{% if model_list %}
-    <ul>
-    {% for model in model_list %}
-        <li><a href="/viewer/{{ model.owner_name }}/{{model.model_name}}">{{ model.owner_name }} : {{model.model_name}}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No models are available</p>
-{% endif %}
+    <h1>
+        Models
+    </h1>
+    {% if model_list %}
+        <ul>
+        {% for model in model_list %}
+            <li><a href="/viewer/{{ model.owner_name }}/{{model.model_name}}">{{ model.owner_name }} : {{model.model_name}}</a></li>
+        {% endfor %}
+        </ul>
+    {% else %}
+        <p>No models are available</p>
+    {% endif %}
 
 </body>
 
