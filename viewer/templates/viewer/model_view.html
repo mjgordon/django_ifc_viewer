@@ -25,21 +25,48 @@
   <body>
     <canvas id="three-canvas"></canvas>
 
-    <div class="ui_box" style="width:200px; height:400px; right:0px; top: 0px">
+    <div class="ui_box" id="uiRight" style="width:300px; height:600px; right:0px; top: 0px">
+      <div style="margin: 10px;">
+        <h2 id="tagModelName" class="uiHeaders">
+          {{model_name}}
+        </h2>
+        <h3 id="tagOrgName" class="uiHeaders">
+          {{owner_name}}
+        </h3>
+        <hr>
+        <h4 id="tagElementType" class="uiHeaders">Select an Element</h4>
+        <h4 id="tagElementId" Y></h4>
+        <hr>
+        <h4 class="uiHeaders">Annotations</h4>
+        <table>
+          <thead>
+            <th>User</th>
+            <th>Date</th>
+            <th>Comment</th>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Yes</td>
+              <td>No</td>
+              <td>Maybe</td>
+            </tr>
+          </tbody>
+        </table>
+        <br>
+        <form>
+          <span style="display:block; padding-right:10px">
+            <input type="text" style="width:100%; height:100px">
+          </span>
+          
+        </form> 
+
+        <div id="annotationUserInput">
+          <button>Add Annotation</button>
+        </div>
+
+      </div>
+      
     </div>
-    <input type="file" name="load" id="file-input" />
-    
-    {% if owner_name and model_name %}
-    <p>
-      {{owner_name}}
-      <br>
-      {{model_name}}
-      <br>
-      {{model_path}}
-    </p>
-    {% else %}
-        <p>No model provided</p>
-    {% endif %}
 
     
 

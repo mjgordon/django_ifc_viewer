@@ -19,6 +19,12 @@ li a {
     position:absolute;
     background-color: lightslategray;
     margin: 10px;
+    border-radius: 5px;
+  }
+
+  .uiHeaders {
+    margin-top:0px;
+    margin-bottom:10px;
   }
   
   #three-canvas {

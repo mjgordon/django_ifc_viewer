@@ -16,6 +16,7 @@ class IfcModel(models.Model):
 class Annotation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     parent_model = models.ForeignKey(IfcModel, on_delete=models.CASCADE)
+    express_id = models.IntegerField(default=-1)
     # parent_element_id -> Check how elements are referenced once loaded, probably integer
     # owner -> Check how user ids are stored
     text = models.TextField(default="")

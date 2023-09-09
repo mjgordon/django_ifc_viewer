@@ -11,10 +11,11 @@ However with the built-in three loader the filesize isn't overlarge anyway
 */
 
 const scene = new Scene();
+var threeCanvas;
+var camera;
 var controls;
 var renderer;
-var camera;
-var threeCanvas;
+
 
 const ifcLoader = new IFCLoader();
 const ifc = ifcLoader.ifcManager;
@@ -29,6 +30,8 @@ const mouse = new Vector2();
 let preselectModel = { id: -1 };
 
 const selectModel = { id: -1 };
+
+var mouseOverUI = false;
 
 function setup() {
   const size = {
@@ -81,6 +84,16 @@ function setup() {
   controls = new OrbitControls(camera, threeCanvas);
   controls.enableDamping = true;
   controls.target.set(-2, 0, 0);
+
+  // Setup mouseover
+  const uiDiv = document.getElementById("uiRight")
+  uiDiv.addEventListener("mouseleave", function(event) {
+    mouseOverUI = false;
+  }, false);
+
+  uiDiv.addEventListener("mouseover", function(event) {
+    mouseOverUI = true;
+  }, false);
 }
 
 setup();
@@ -120,9 +133,28 @@ window.addEventListener("load", () => {
 
 window.onmousemove = (event) => highlight(event, preselectMat, preselectModel);
 
-window.ondblclick = (event) => highlight(event, selectMat, selectModel);
+window.onclick = (event) => {
+  let hightlightReturn = highlight(event, selectMat, selectModel);
+  if (hightlightReturn) {
+    let [modelId, expressId] = hightlightReturn;
+    const props = ifc.getItemProperties(modelId, expressId);
+    //console.log(props);
 
-threeCanvas.ondblclick = pick;
+    let tagElementType = document.getElementById("tagElementType")
+    let tagElementId = document.getElementById("tagElementId")
+
+    let displayName = props.Name.value.substring(0, props.Name.value.lastIndexOf(":"))
+
+    tagElementType.innerHTML = displayName;
+    tagElementId.innerHTML = expressId;
+    
+  }
+
+  
+  
+}
+
+//threeCanvas.onclick = pick;
 
 
 // === OTHER FUNCTIONS ===
@@ -147,19 +179,10 @@ function cast(event) {
 }
 
 
-function pick(event) {
-  const found = cast(event)[0];
-  if (found) {
-    const index = found.faceIndex;
-    const geometry = found.object.geometry;
-    const ifc = ifcLoader.ifcManager;
-    const id = ifc.getExpressId(geometry, index);
-    console.log(id);
-  }
-}
-
-
 function highlight(event, material, model) {
+  if (mouseOverUI) {
+    return null;
+  }
   const found = cast(event)[0];
   if (found) {
     // Gets model ID
@@ -178,10 +201,15 @@ function highlight(event, material, model) {
       scene: scene,
       removePrevious: true,
     });
-  } else {
+
+    return [model.id, id]
+  } 
+  else {
     // Removes previous highlight
     ifc.removeSubset(model.id, material);
+    return null;
   }
+  
 }
 
 
