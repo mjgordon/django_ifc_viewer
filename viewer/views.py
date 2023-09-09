@@ -27,14 +27,15 @@ def owner_view(request, owner_name):
     return HttpResponse(template.render(context, request))
 
 
-def model_view(request, owner_name, model_name):    
-    ifc_model_record = IfcModel.objects.get(owner_name__exact=owner_name, model_name__exact=model_name)
+def model_view(request, org_name, model_name):    
+    ifc_model_record = IfcModel.objects.get(owner_organisation__url_name__exact=org_name, model_name__exact=model_name)
 
     template = loader.get_template("viewer/model_view.html")
     
     context = {
-        "owner_name": owner_name,
+        "owner_name": ifc_model_record.owner_organisation.name,
         "model_name": model_name,
+        "display_name": ifc_model_record.display_name,
         "model_path": ifc_model_record.path
     }
     return HttpResponse(template.render(context, request))

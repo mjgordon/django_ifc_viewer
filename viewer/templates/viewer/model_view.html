@@ -14,6 +14,7 @@
     <script>
       var owner_name = '{{ owner_name }}'
       var model_name = '{{ model_name }}'
+      var model_name = '{{ display_name }}'
       var model_path = '{{ model_path }}'
     </script>
 
@@ -28,7 +29,7 @@
     <div class="ui_box" id="uiRight" style="width:300px; height:600px; right:0px; top: 0px">
       <div style="margin: 10px;">
         <h2 id="tagModelName" class="uiHeaders">
-          {{model_name}}
+          {{display_name}}
         </h2>
         <h3 id="tagOrgName" class="uiHeaders">
           {{owner_name}}
