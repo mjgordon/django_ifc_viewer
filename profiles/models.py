@@ -28,4 +28,7 @@ class Profile(models.Model):
     organisation = models.ForeignKey(Organisation, on_delete=models.CASCADE)
     role = models.CharField(max_length=2, choices=ROLE_CHOICES, default=ROLE_VIEWER)
 
+    def __str__(self):
+        return self.user.get_full_name()
+
 
