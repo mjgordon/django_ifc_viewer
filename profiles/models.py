@@ -7,6 +7,7 @@ import uuid
 class Organisation(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     name = models.CharField(max_length=50)
+    url_name = models.CharField(max_length=50, default="")
 
     def __str__(self):
         return self.name
