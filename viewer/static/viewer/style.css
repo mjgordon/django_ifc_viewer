@@ -1,42 +1,26 @@
-li a {
-    color: green;
+table {
+  border-collapse: collapse;
 }
 
-/*
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-  
-  html,
-  body {
-    overflow: hidden;
-  }
-  */
+tr {
+  border: 1px solid gray;
+}
 
-  .ui_box {
-    position:absolute;
-    background-color: lightslategray;
-    margin: 10px;
-    border-radius: 5px;
-  }
+.ui_box {
+  position:absolute;
+  background-color: #DFF8EB;
+  margin: 10px;
+  border-radius: 5px;
+}
 
-  .uiHeaders {
-    margin-top:0px;
-    margin-bottom:10px;
-  }
-  
-  #three-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    outline: none;
-  }
-  
-  /*
-  #file-input {
-    z-index: 1;
-    position: absolute;
-  }
-  */
+.uiHeaders {
+  margin-top:0px;
+  margin-bottom:10px;
+}
+
+#three-canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  outline: none;
+}

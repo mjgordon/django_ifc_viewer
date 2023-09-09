@@ -79,6 +79,8 @@ function setup() {
   axes.material.depthTest = false;
   axes.renderOrder = 1;
   scene.add(axes);
+
+  scene.background = new Color(0x444444);
   
   //Creates the orbit controls (to navigate the scene)
   controls = new OrbitControls(camera, threeCanvas);
@@ -215,8 +217,8 @@ function highlight(event, material, model) {
 
 const preselectMat = new MeshLambertMaterial({
   transparent: true,
-  opacity: 0.6,
-  color: 0xff88ff,
+  opacity: 0.4,
+  color: 0xF96D4E,
   depthTest: false,
 });
 
@@ -224,6 +226,6 @@ const preselectMat = new MeshLambertMaterial({
 const selectMat = new MeshLambertMaterial({
   transparent: true,
   opacity: 0.6,
-  color: 0xff00ff,
+  color: 0xF55D3E,
   depthTest: false,
 });
