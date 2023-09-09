@@ -6,7 +6,8 @@ b) console.log(Scene)
 are used in the js fed to the bundler, however this feels hacky 
 */
 /*
-NB2 : Apparently neither of the above methods works for IfcLoader - Just disabling tree shaking for now
+NB2 : Apparently neither of the above methods works for IfcLoader - Just disabling tree shaking for now.
+However with the built-in three loader the filesize isn't overlarge anyway
 */
 
 const scene = new Scene();

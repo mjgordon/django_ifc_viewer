@@ -8,11 +8,21 @@ logger = logging.getLogger(__name__)
 
 
 def index(request):
-    models = IfcModel.objects.all()
-    logger.info(models)
+    ifc_model_records = IfcModel.objects.all()
     template = loader.get_template("viewer/index.html")
     context = {
-        "model_list": models,
+        "model_list": ifc_model_records,
+    }
+    return HttpResponse(template.render(context, request))
+
+
+def owner_view(request, owner_name):
+    ifc_model_records = IfcModel.objects.filter(owner_name__exact=owner_name)
+
+    template = loader.get_template("viewer/index.html")
+
+    context = {
+        "model_list": ifc_model_records,
     }
     return HttpResponse(template.render(context, request))
 
@@ -20,7 +30,6 @@ def index(request):
 def model_view(request, owner_name, model_name):    
     ifc_model_record = IfcModel.objects.get(owner_name__exact=owner_name, model_name__exact=model_name)
 
-    logger.info(ifc_model_record)
     template = loader.get_template("viewer/model_view.html")
     
     context = {

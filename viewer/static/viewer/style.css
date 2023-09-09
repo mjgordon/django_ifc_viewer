@@ -14,6 +14,12 @@ li a {
     overflow: hidden;
   }
   */
+
+  .ui_box {
+    position:absolute;
+    background-color: lightslategray;
+    margin: 10px;
+  }
   
   #three-canvas {
     position: fixed;
