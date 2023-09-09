@@ -2,7 +2,11 @@ __pycache__
 db.sqlite3
 .env
 
-/test_data
+# NPM packages assembled by rollup
+bundle.js
+
+# Local IFC files
+test_data/
 
 *.log
 *.pot

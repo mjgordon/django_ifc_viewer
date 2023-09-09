@@ -18,11 +18,15 @@ def index(request):
 
 
 def model_view(request, owner_name, model_name):    
-    models = IfcModel.objects.all()
-    logger.info(models)
+    ifc_model_record = IfcModel.objects.get(owner_name__exact=owner_name, model_name__exact=model_name)
+
+    logger.info(ifc_model_record)
     template = loader.get_template("viewer/model_view.html")
+    
     context = {
-        "model_list": models,
+        "owner_name": owner_name,
+        "model_name": model_name,
+        "model_path": ifc_model_record.path
     }
     return HttpResponse(template.render(context, request))
 

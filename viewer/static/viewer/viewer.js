@@ -1,29 +1,31 @@
-//import * as THREE from 'https://cdn.skypack.dev/three';
-//import * as webifc from 'https://cdn.skypack.dev/web-ifc-three';
+/*
+Note : currently, Three and web-ifc libraries are loaded from a bundle created by using rollup in a local npm project. 
+To maintain class definitions while still using treeshaking, either
+a) var dummy = new Scene()
+b) console.log(Scene)
+are used in the js fed to the bundler, however this feels hacky 
+*/
+/*
+NB2 : Apparently neither of the above methods works for IfcLoader - Just disabling tree shaking for now
+*/
 
-//import * as THREE from 'three';
-
-import { AmbientLight, AxesHelper, DirectionalLight, GridHelper, PerspectiveCamera, Scene, WebGLRenderer } from "three";
-//import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
-import OrbitControls from 'threejs-orbit-controls';
-
-//Creates the Three.js scene
 const scene = new Scene();
 
-//Object to store the size of the viewport
 const size = {
   width: window.innerWidth,
   height: window.innerHeight,
 };
 
-//Creates the camera (point of view of the user)
+
+// Setup camera
 const aspect = size.width / size.height;
 const camera = new PerspectiveCamera(75, aspect);
 camera.position.z = 15;
 camera.position.y = 13;
 camera.position.x = 8;
 
-//Creates the lights of the scene
+
+// Setup lights
 const lightColor = 0xffffff;
 
 const ambientLight = new AmbientLight(lightColor, 0.5);
@@ -35,7 +37,8 @@ directionalLight.target.position.set(-5, 0, 0);
 scene.add(directionalLight);
 scene.add(directionalLight.target);
 
-//Sets up the renderer, fetching the canvas of the HTML
+
+// Setup renderer
 const threeCanvas = document.getElementById("three-canvas");
 const renderer = new WebGLRenderer({
   canvas: threeCanvas,
@@ -75,4 +78,13 @@ window.addEventListener("resize", () => {
   camera.aspect = size.width / size.height;
   camera.updateProjectionMatrix();
   renderer.setSize(size.width, size.height);
+});
+
+const ifcLoader = new IFCLoader();
+ifcLoader.ifcManager.setWasmPath("");
+
+window.addEventListener("load", () => {
+  console.log("page loaded")
+
+  ifcLoader.load("/static/viewer/" + model_path, (ifcModel) => scene.add(ifcModel));
 });
