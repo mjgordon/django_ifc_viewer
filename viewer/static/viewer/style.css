@@ -6,6 +6,10 @@ tr {
   border: 1px solid gray;
 }
 
+table td {
+  word-wrap: break-word;
+}
+
 .ui_box {
   position:absolute;
   background-color: #DFF8EB;

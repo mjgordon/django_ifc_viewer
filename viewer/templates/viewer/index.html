@@ -10,7 +10,7 @@
     {% if model_list %}
         <ul>
         {% for model in model_list %}
-            <li><a href="/viewer/{{ model.owner_name }}/{{model.model_name}}">{{ model.owner_name }} : {{model.model_name}}</a></li>
+            <li><a href="/viewer/{{ model.owner_organisation.url_name }}/{{model.model_name}}">{{ model.owner_organisation.name }} : {{model.model_name}}</a></li>
         {% endfor %}
         </ul>
     {% else %}

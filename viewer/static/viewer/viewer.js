@@ -33,6 +33,8 @@ const selectModel = { id: -1 };
 
 var mouseOverUI = false;
 
+var selectedExpressId = -1;
+
 function setup() {
   const size = {
     width: window.innerWidth,
@@ -80,7 +82,7 @@ function setup() {
   axes.renderOrder = 1;
   scene.add(axes);
 
-  scene.background = new Color(0x444444);
+  scene.background = new Color(0x333333);
   
   //Creates the orbit controls (to navigate the scene)
   controls = new OrbitControls(camera, threeCanvas);
@@ -96,6 +98,26 @@ function setup() {
   uiDiv.addEventListener("mouseover", function(event) {
     mouseOverUI = true;
   }, false);
+  
+  const textAreaAnnotate = document.getElementById("annotationTextArea")
+  const buttonAnnotate = document.getElementById("annotationButton")
+  buttonAnnotate.addEventListener("mousedown", function(event) {
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "/viewer/annotate", true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
+
+    xhr.addEventListener("load",function() {
+      setAnnotationList()
+    });
+    
+    xhr.send(JSON.stringify({
+      org_url:org_url,
+      model_url:model_url,
+      user_name:"",
+      express_id:selectedExpressId,
+      text: textAreaAnnotate.value
+    }));
+  });
 }
 
 setup();
@@ -123,22 +145,25 @@ window.addEventListener("resize", () => {
 });
 
 
-
 window.addEventListener("load", () => {
-  console.log("page loaded")
-
   ifcLoader.load("/static/viewer/" + model_path, (ifcModel) => {
     scene.add(ifcModel);
     ifcModels.push(ifcModel);
   });
+
+  setAnnotationList()
 });
+
 
 window.onmousemove = (event) => highlight(event, preselectMat, preselectModel);
 
+
+//threeCanvas.onclick = pick;
 window.onclick = (event) => {
   let hightlightReturn = highlight(event, selectMat, selectModel);
   if (hightlightReturn) {
     let [modelId, expressId] = hightlightReturn;
+    selectedExpressId = expressId;
     const props = ifc.getItemProperties(modelId, expressId);
     //console.log(props);
 
@@ -148,15 +173,15 @@ window.onclick = (event) => {
     let displayName = props.Name.value.substring(0, props.Name.value.lastIndexOf(":"))
 
     tagElementType.innerHTML = displayName;
-    tagElementId.innerHTML = expressId;
-    
+    tagElementId.innerHTML = expressId;    
+
+    let annotationTextArea = document.getElementById("annotationTextArea")
+    let annotationButton = document.getElementById("annotationButton")
+
+    annotationTextArea.disabled = false;
+    annotationButton.disabled = false;
   }
-
-  
-  
 }
-
-//threeCanvas.onclick = pick;
 
 
 // === OTHER FUNCTIONS ===
@@ -212,6 +237,34 @@ function highlight(event, material, model) {
     return null;
   }
   
+}
+
+
+function setAnnotationList() {
+  var xhr = new XMLHttpRequest();
+  var url = "/viewer/get_annotations?"
+  url += `org_url=${org_url}&model_url=${model_url}`
+  xhr.open("GET", url, true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+
+  xhr.addEventListener("load",function() {
+    const tableAnnotations = document.getElementById('tableAnnotations')
+    
+    // This can be generated cleaner
+    var textHTML = "<table><tbody>"
+    const annotations = JSON.parse(this.response)
+    for (var n in annotations) {
+      var annotation = annotations[n]
+      textHTML += "<tr>"
+      textHTML += `<td></td><td></td><td>${annotation.fields.text}</td>`
+      textHTML += "</tr>"
+    }
+
+    textHTML += "</tbody></table>"
+    tableAnnotations.innerHTML = textHTML
+  });
+    
+  xhr.send(null);
 }
 
 
