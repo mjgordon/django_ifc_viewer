@@ -254,7 +254,7 @@ function setAnnotationList() {
     const annotations = JSON.parse(this.response)
     for (var n in annotations) {
       var annotation = annotations[n]
-      textHTML += "<tr>"
+      textHTML += "<tr class='trAnnotationRow'>"
       textHTML += `
       <td class='tdAnnotationsUser'></td>
       <td class='tdAnnotationsTime'>${annotation.fields.datetime.substring(0,10)}</td>

@@ -71,7 +71,7 @@ def get_annotations(request):
     model_url = request.GET.get('model_url')
 
     parent_model = IfcModel.objects.get(owner_organisation__url_name__exact=org_url, model_name__exact=model_url)
-    annotation_records = Annotation.objects.filter(parent_model__exact=parent_model)
+    annotation_records = Annotation.objects.filter(parent_model__exact=parent_model).order_by('datetime')
 
     data = serializers.serialize('json',annotation_records)
 

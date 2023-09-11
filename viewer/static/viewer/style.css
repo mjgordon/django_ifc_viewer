@@ -1,21 +1,8 @@
-table {
-  border-collapse: collapse;
-}
-
-
-tr {
-  border: 1px solid gray;
-}
-
-
-table td {
-  word-wrap: break-word;
-}
-
-
 .tableAnnotations {
+  border-collapse: collapse;
   table-layout:fixed;
   width:100%;
+  word-wrap: break-word;
 }
 
 
@@ -31,6 +18,11 @@ table td {
 
 .tdAnnotationsText {
   text-align: left;
+}
+
+
+.trAnnotationRow {
+  border: 1px solid gray;
 }
 
 
