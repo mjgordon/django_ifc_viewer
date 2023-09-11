@@ -2,29 +2,87 @@ table {
   border-collapse: collapse;
 }
 
+
 tr {
   border: 1px solid gray;
 }
+
 
 table td {
   word-wrap: break-word;
 }
 
-.ui_box {
+
+.tableAnnotations {
+  table-layout:fixed;
+  width:100%;
+}
+
+
+.tdAnnotationsUser {
+  text-align: right;
+}
+
+
+.tdAnnotationsTime {
+  text-align: center;
+}
+
+
+.tdAnnotationsText {
+  text-align: left;
+}
+
+
+.uiBox {
   position:absolute;
   background-color: #DFF8EB;
   margin: 10px;
   border-radius: 5px;
 }
 
+
+.uiBoxInterior {
+  margin: 10px;
+}
+
+
 .uiHeaders {
   margin-top:0px;
   margin-bottom:10px;
 }
+
+
+#annotationTextSpan {
+  display:block; 
+  padding-right:10px;
+}
+
+
+#annotationTextArea {
+  width:100%; 
+  height:100px; 
+  resize:none;
+}
+
+
+#tableAnnotationsScroll {
+  height:200px; 
+  overflow:auto;
+}
+
 
 #three-canvas {
   position: fixed;
   top: 0;
   left: 0;
   outline: none;
+}
+
+
+#uiRight {
+  width:400px; 
+  height:600px; 
+  right:0px; 
+  top: 0px
 }

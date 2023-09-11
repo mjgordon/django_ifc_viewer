@@ -20,6 +20,7 @@ class Annotation(models.Model):
     parent_model = models.ForeignKey(IfcModel, on_delete=models.CASCADE)
     express_id = models.IntegerField(default=-1)
     author = models.ForeignKey('profiles.Profile',on_delete=models.CASCADE, null=True)
+    datetime = models.DateTimeField(auto_now_add=True)
     
     text = models.TextField(default="")
 

@@ -35,13 +35,12 @@ var mouseOverUI = false;
 
 var selectedExpressId = -1;
 
+const size = {
+  width: window.innerWidth,
+  height: window.innerHeight,
+};
+
 function setup() {
-  const size = {
-    width: window.innerWidth,
-    height: window.innerHeight,
-  };
-  
-  
   // Setup camera
   const aspect = size.width / size.height;
   camera = new PerspectiveCamera(75, aspect);
@@ -248,7 +247,7 @@ function setAnnotationList() {
   xhr.setRequestHeader('Content-Type', 'application/json');
 
   xhr.addEventListener("load",function() {
-    const tableAnnotations = document.getElementById('tableAnnotations')
+    const tableAnnotations = document.getElementById('tableAnnotationsData')
     
     // This can be generated cleaner
     var textHTML = "<table><tbody>"
@@ -256,7 +255,10 @@ function setAnnotationList() {
     for (var n in annotations) {
       var annotation = annotations[n]
       textHTML += "<tr>"
-      textHTML += `<td></td><td></td><td>${annotation.fields.text}</td>`
+      textHTML += `
+      <td class='tdAnnotationsUser'></td>
+      <td class='tdAnnotationsTime'>${annotation.fields.datetime.substring(0,10)}</td>
+      <td class='tdAnnotationsText'>${annotation.fields.text}</td>`
       textHTML += "</tr>"
     }
 
