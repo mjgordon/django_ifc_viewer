@@ -1,9 +1,11 @@
 from django.core import serializers
+from django.db.models import Q
 from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 
 from viewer.models import IfcModel, Annotation
+from profiles.models import Profile, Organisation
 
 import logging
 
@@ -13,7 +15,11 @@ logger = logging.getLogger('django')
 
 
 def index(request):
-    ifc_model_records = IfcModel.objects.all()
+    user_org = None
+    if request.user.is_authenticated:
+        user_org = Profile.objects.get(user__exact=request.user).organisation
+    demo_org = Organisation.objects.get(url_name__exact="demo_organisation")
+    ifc_model_records = IfcModel.objects.filter(Q(owner_organisation__exact=user_org) | Q(owner_organisation__exact=demo_org))
     template = loader.get_template("viewer/index.html")
     context = {
         "model_list": ifc_model_records,
@@ -22,7 +28,20 @@ def index(request):
 
 
 def org_view(request, org_name):
-    ifc_model_records = IfcModel.objects.filter(owner_organisation__url_name__exact=org_name)
+    logger.info(request.user)
+    
+    query_org = None
+    if request.user.is_authenticated:
+        user_org = Profile.objects.get(user__exact=request.user).organisation
+        if user_org.url_name == org_name:
+            query_org = Organisation.objects.get(url_name__exact=org_name)
+
+    if org_name == "demo_organisation":
+        query_org = Organisation.objects.get(url_name__exact="demo_organisation")
+
+    ifc_model_records = IfcModel.objects.filter(owner_organisation__exact=query_org)
+
+    #ifc_model_records = IfcModel.objects.filter(owner_organisation__url_name__exact=org_name)
 
     template = loader.get_template("viewer/index.html")
 
@@ -33,6 +52,7 @@ def org_view(request, org_name):
 
 
 def model_view(request, org_name, model_name):    
+    logger.info(request.user)
     ifc_model_record = IfcModel.objects.get(owner_organisation__url_name__exact=org_name, model_name__exact=model_name)
     #logger.info(ifc_model_record)
 

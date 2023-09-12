@@ -68,7 +68,7 @@ ROOT_URLCONF = 'django_ifc_viewer.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -157,3 +157,5 @@ LOGGING = {
 if DEBUG:
     import mimetypes
     mimetypes.add_type("application/javascript", ".js", True)
+
+LOGIN_REDIRECT_URL = '/viewer/'
