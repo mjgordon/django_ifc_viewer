@@ -1,0 +1,37 @@
+:root {
+    --backgroundColor: #333333;
+}
+
+body {
+    background:var(--backgroundColor);
+}
+
+
+#buttonLogin {
+   margin-right:10px;
+}
+
+
+#headerBar {
+    background-color: black;
+    width:100%;
+    height:50px;
+    margin:0;
+    padding:0;
+    left:0;
+    top:0;
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+}
+
+
+#overCanvas {
+    position:absolute; 
+    left:0; 
+    top:0; 
+    margin:0; 
+    padding:0; 
+    width:100%;
+    height:100%; 
+}

@@ -1,23 +1,29 @@
-<head>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'viewer/style.css' %}">
-</head>
+{% extends "base.html" %}
+{% load static %}
 
-<body>
-    <h1>
-        Models
-    </h1>
-    {% if model_list %}
-        <ul>
-        {% for model in model_list %}
-            <li><a href="/viewer/{{ model.owner_organisation.url_name }}/{{model.model_name}}">{{ model.owner_organisation.name }} : {{model.model_name}}</a></li>
-        {% endfor %}
-        </ul>
-    {% else %}
-        <p>No models are available for your user and/or organisation</p>
-    {% endif %}
+{% block header %}
+<link rel="stylesheet" href="{% static 'viewer/style.css' %}">
+{% endblock %}
 
-</body>
+
+{% block content %}
+<h1>
+    Models
+</h1>
+{% if model_list %}
+    <ul>
+    {% for model in model_list %}
+        <li><a href="/viewer/{{ model.owner_organisation.url_name }}/{{model.model_name}}">{{ model.owner_organisation.name }} : {{model.model_name}}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No models are available for your user and/or organisation</p>
+{% endif %}
+{% endblock %}
+
+
+
+
 
 
 

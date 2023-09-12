@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+{% load static %}
+
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    
+        <title>Ifc Viewer</title>
+
+        <link rel="stylesheet" href="{% static 'base.css' %}">
+
+        {% block header %}{% endblock %}
+    </head>
+
+    <body>
+        {% block precontent %}{% endblock %}
+
+        <div id="overCanvas" >
+            <div id="headerBar">
+                <div id="divLogin">
+                  <button id="buttonLogin">Login</button>
+                </div>
+            </div>
+    
+            {% block content %}{% endblock %}
+        </div>
+        
+    </body>
+</html>
+
