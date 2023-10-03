@@ -1,3 +1,11 @@
+a:link {
+  color: white;
+}
+
+a:visited {
+  color: white;
+}
+
 .tableAnnotations {
   border-collapse: collapse;
   table-layout:fixed;
@@ -58,9 +66,6 @@
 }
 
 
-#divLogin {
-  position:absolute;
-}
 
 
 #tableAnnotationsScroll {

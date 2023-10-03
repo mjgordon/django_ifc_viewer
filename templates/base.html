@@ -2,31 +2,39 @@
 {% load static %}
 
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    
-        <title>Ifc Viewer</title>
 
-        <link rel="stylesheet" href="{% static 'base.css' %}">
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        {% block header %}{% endblock %}
-    </head>
+    <title>Ifc Viewer</title>
 
-    <body>
-        {% block precontent %}{% endblock %}
+    <link rel="stylesheet" href="{% static 'base.css' %}">
 
-        <div id="overCanvas" >
-            <div id="headerBar">
-                <div id="divLogin">
-                  <button id="buttonLogin">Login</button>
-                </div>
-            </div>
-    
-            {% block content %}{% endblock %}
-        </div>
+    {% block header %}{% endblock %}
+</head>
+
+<body>
+    {% block precontent %}{% endblock %}
+
+    <!--
+    <div id="overCanvas">
         
-    </body>
-</html>
+        <div id="headerBar">
+            <div id="divLoginButton" style="text-align:right">
+                <form action="/accounts/login">
+                    <button id="buttonLogin" type="submit">Login</button>
+                </form>
+            </div>
+        </div>
 
+        
+    </div>
+    -->
+
+    {% block content %}{% endblock %}
+
+</body>
+
+</html>

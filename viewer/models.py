@@ -21,6 +21,9 @@ class Annotation(models.Model):
     express_id = models.IntegerField(default=-1)
     author = models.ForeignKey('profiles.Profile',on_delete=models.CASCADE, null=True)
     datetime = models.DateTimeField(auto_now_add=True)
+    center_x = models.FloatField(default=0)
+    center_y = models.FloatField(default=0)
+    center_z = models.FloatField(default=0)
     
     text = models.TextField(default="")
 

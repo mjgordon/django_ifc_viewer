@@ -12,6 +12,19 @@ body {
 }
 
 
+#divLogin {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+}
+
+
+#divLoginInner {
+    margin:10px;
+}
+
+
 #headerBar {
     background-color: black;
     width:100%;
@@ -22,7 +35,7 @@ body {
     top:0;
     display:flex;
     align-items:center;
-    justify-content:flex-end;
+    /*justify-content:flex-end;*/
 }
 
 

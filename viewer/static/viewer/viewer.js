@@ -10,6 +10,8 @@ NB2 : Apparently neither of the above methods works for IfcLoader - Just disabli
 However with the built-in three loader the filesize isn't overlarge anyway
 */
 
+
+
 const scene = new Scene();
 var threeCanvas;
 var camera;
@@ -18,7 +20,6 @@ var renderer;
 
 
 const ifcLoader = new IFCLoader();
-const ifc = ifcLoader.ifcManager;
 const ifcModels = [];
 //ifcLoader.ifcManager.setWasmPath(""); // The default path correctly looks in the static directory 
 
@@ -27,9 +28,9 @@ raycaster.firstHitOnly = true;
 const mouse = new Vector2();
 
 // Reference to the previous selection
-let preselectModel = { id: -1 };
+let preselectModel = { id: -1, x: 0, y: 0, z: 0 };
 
-const selectModel = { id: -1 };
+const selectModel = { id: -1, x: 0, y: 0, z: 0 };
 
 var mouseOverUI = false;
 
@@ -114,7 +115,10 @@ function setup() {
       model_url:model_url,
       user_name:"",
       express_id:selectedExpressId,
-      text: textAreaAnnotate.value
+      text: textAreaAnnotate.value,
+      center_x: selectModel.x,
+      center_y: selectModel.y,
+      center_z: selectModel.z,
     }));
   });
 }
@@ -163,8 +167,7 @@ window.onclick = (event) => {
   if (hightlightReturn) {
     let [modelId, expressId] = hightlightReturn;
     selectedExpressId = expressId;
-    const props = ifc.getItemProperties(modelId, expressId);
-    //console.log(props);
+    const props = ifcLoader.ifcManager.getItemProperties(modelId, expressId);
 
     let tagElementType = document.getElementById("tagElementType")
     let tagElementId = document.getElementById("tagElementId")
@@ -217,22 +220,35 @@ function highlight(event, material, model) {
     // Gets Express ID
     const index = found.faceIndex;
     const geometry = found.object.geometry;
-    const id = ifc.getExpressId(geometry, index);
+    const expressId = ifcLoader.ifcManager.getExpressId(geometry, index);
+
+    
 
     // Creates subset
-    ifcLoader.ifcManager.createSubset({
+    let subset = ifcLoader.ifcManager.createSubset({
       modelID: model.id,
-      ids: [id],
+      ids: [expressId],
       material: material,
       scene: scene,
       removePrevious: true,
     });
 
-    return [model.id, id]
+    if (subset) {
+      // Apparently bounding sphere gets created live on some delay
+      setTimeout(function()
+      {
+        model.x = subset.geometry.boundingSphere.center.x;
+        model.y = subset.geometry.boundingSphere.center.y;
+        model.z = subset.geometry.boundingSphere.center.z;
+      }, 100);
+      
+    }
+  
+    return [model.id, expressId]
   } 
   else {
     // Removes previous highlight
-    ifc.removeSubset(model.id, material);
+    ifcLoader.ifcManager.removeSubset(model.id, material);
     return null;
   }
   
@@ -254,16 +270,60 @@ function setAnnotationList() {
     const annotations = JSON.parse(this.response)
     for (var n in annotations) {
       var annotation = annotations[n]
-      textHTML += "<tr class='trAnnotationRow'>"
+      textHTML += `<tr class='trAnnotationRow' id='trAnnotationRow${annotation.fields.express_id}'>`
       textHTML += `
       <td class='tdAnnotationsUser'></td>
       <td class='tdAnnotationsTime'>${annotation.fields.datetime.substring(0,10)}</td>
       <td class='tdAnnotationsText'>${annotation.fields.text}</td>`
       textHTML += "</tr>"
+
+      
     }
 
     textHTML += "</tbody></table>"
     tableAnnotations.innerHTML = textHTML
+
+    for (var n in annotations) {
+      let annotation = annotations[n]
+ 
+      var row = document.getElementById(`trAnnotationRow${annotation.fields.express_id}`)
+
+
+      row.onclick = (event) => {
+
+        let modelCenter = ifcModels[0].geometry.boundingSphere.center;
+        console.log(modelCenter)
+
+        let x = annotation.fields.center_x;
+        let y = annotation.fields.center_y;
+        let z = annotation.fields.center_z;
+
+        let target = new Vector3(x,y,z);
+        let offset = new Vector3(x,y,z);
+
+        offset.sub(modelCenter);
+
+        if (offset.length() > 0) {
+          offset.normalize();
+        }
+        else {
+          offset = new Vector3(1,1,1);
+        }
+        
+        offset.multiplyScalar(10);
+
+        console.log(target);
+        console.log(offset);
+
+
+
+        camera.position.set(x+offset.x,y+offset.y,z+offset.z);
+        camera.lookAt(target);
+
+        
+      
+      }
+    }
   });
     
   xhr.send(null);

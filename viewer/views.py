@@ -41,7 +41,7 @@ def org_view(request, org_name):
 
     ifc_model_records = IfcModel.objects.filter(owner_organisation__exact=query_org)
 
-    #ifc_model_records = IfcModel.objects.filter(owner_organisation__url_name__exact=org_name)
+    #fifc_model_records = IfcModel.objects.filter(owner_organisation__url_name__exact=org_name)
 
     template = loader.get_template("viewer/index.html")
 
@@ -75,10 +75,10 @@ def upload(request):
 @csrf_exempt
 def annotate(request):
     body_json = json.loads(request.body)
-    #logger.info(body_json)
+    logger.info(body_json)
 
     parent_model = IfcModel.objects.get(owner_organisation__url_name__exact=body_json['org_url'], model_name__exact=body_json['model_url'])
-    annotation = Annotation(parent_model=parent_model,express_id=body_json['express_id'],text=body_json['text'])
+    annotation = Annotation(parent_model=parent_model,express_id=body_json['express_id'],text=body_json['text'], center_x=body_json['center_x'],center_y=body_json['center_y'], center_z=body_json['center_z'])
 
     annotation.save()
 
