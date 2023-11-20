@@ -222,8 +222,6 @@ function highlight(event, material, model) {
     const geometry = found.object.geometry;
     const expressId = ifcLoader.ifcManager.getExpressId(geometry, index);
 
-    
-
     // Creates subset
     let subset = ifcLoader.ifcManager.createSubset({
       modelID: model.id,
@@ -251,7 +249,6 @@ function highlight(event, material, model) {
     ifcLoader.ifcManager.removeSubset(model.id, material);
     return null;
   }
-  
 }
 
 
@@ -276,8 +273,6 @@ function setAnnotationList() {
       <td class='tdAnnotationsTime'>${annotation.fields.datetime.substring(0,10)}</td>
       <td class='tdAnnotationsText'>${annotation.fields.text}</td>`
       textHTML += "</tr>"
-
-      
     }
 
     textHTML += "</tbody></table>"
@@ -288,11 +283,9 @@ function setAnnotationList() {
  
       var row = document.getElementById(`trAnnotationRow${annotation.fields.express_id}`)
 
-
       row.onclick = (event) => {
-
         let modelCenter = ifcModels[0].geometry.boundingSphere.center;
-        console.log(modelCenter)
+        //console.log(modelCenter)
 
         let x = annotation.fields.center_x;
         let y = annotation.fields.center_y;
@@ -312,16 +305,11 @@ function setAnnotationList() {
         
         offset.multiplyScalar(10);
 
-        console.log(target);
-        console.log(offset);
-
-
+        //console.log(target);
+        //console.log(offset);
 
         camera.position.set(x+offset.x,y+offset.y,z+offset.z);
         camera.lookAt(target);
-
-        
-      
       }
     }
   });

@@ -19,10 +19,29 @@ def index(request):
     if request.user.is_authenticated:
         user_org = Profile.objects.get(user__exact=request.user).organisation
     demo_org = Organisation.objects.get(url_name__exact="demo_organisation")
-    ifc_model_records = IfcModel.objects.filter(Q(owner_organisation__exact=user_org) | Q(owner_organisation__exact=demo_org))
+    ifc_model_records = IfcModel.objects.filter(Q(owner_organisation__exact=user_org) | Q(owner_organisation__exact=demo_org)).order_by('owner_organisation')
+
+    sorted_records = {}
+    for record in ifc_model_records:
+        if not record.owner_organisation in sorted_records:
+            sorted_records[record.owner_organisation] = []
+            
+        sorted_records[record.owner_organisation].append(record)
+
+    sorted_records_nested = []
+    for key,val in sorted_records.items():
+        sorted_records_nested.append(val)
+
+
+    logger.info("=========================")
+    logger.info(sorted_records_nested)
+            
+
+    
+
     template = loader.get_template("viewer/index.html")
     context = {
-        "model_list": ifc_model_records,
+        "model_list": sorted_records_nested,
     }
     return HttpResponse(template.render(context, request))
 
@@ -54,6 +73,7 @@ def org_view(request, org_name):
 def model_view(request, org_name, model_name):    
     logger.info(request.user)
     ifc_model_record = IfcModel.objects.get(owner_organisation__url_name__exact=org_name, model_name__exact=model_name)
+
     #logger.info(ifc_model_record)
 
     template = loader.get_template("viewer/model_view.html")

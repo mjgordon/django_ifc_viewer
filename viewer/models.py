@@ -2,8 +2,6 @@ from django.db import models
 import uuid
 
 
-
-
 class IfcModel(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4)
     owner_organisation = models.ForeignKey('profiles.Organisation',on_delete=models.CASCADE, null=True)
@@ -29,4 +27,3 @@ class Annotation(models.Model):
 
     def __str__(self):
         return self.text
-

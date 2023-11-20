@@ -7,20 +7,32 @@
 
 
 {% block content %}
-<h1>
-    Models
-</h1>
-{% if model_list %}
-    <ul>
-    {% for model in model_list %}
-        <li><a href="/viewer/{{ model.owner_organisation.url_name }}/{{model.model_name}}">{{ model.owner_organisation.name }} : {{model.model_name}}</a></li>
-    {% endfor %}
-    </ul>
-{% else %}
-    <p>No models are available for your user and/or organisation</p>
-{% endif %}
-{% endblock %}
-
+<div id="modelViewDiv">
+    <h1>
+        Models
+    </h1>
+    {% if model_list %}
+        {% for org_list in model_list %}
+            <div class="uiBox">
+                <div class="uiBoxInterior">
+                    <h2 class="uiHeaders">
+                        {{ org_list.0.owner_organisation.name }}
+                    </h2>
+                    <ul>
+                    {% for model in org_list %}
+                        <li class="uiBoxLinks"><a href="/viewer/{{ model.owner_organisation.url_name }}/{{model.model_name}}">{{model.display_name}}</a></li>
+                    {% endfor %}
+                    </ul>    
+                </div>
+            </div>
+            
+        {% endfor %}
+        
+    {% else %}
+        <p>No models are available for your user and/or organisation</p>
+    {% endif %}
+    {% endblock %}    
+</div>
 
 
 

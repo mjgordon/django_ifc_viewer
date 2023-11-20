@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'viewer.apps.ViewerConfig',
     'profiles.apps.ProfilesConfig',
+    'zhaw.apps.ZhawConfig'
 ]
 
 MIDDLEWARE = [

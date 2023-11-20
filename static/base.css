@@ -7,6 +7,33 @@ body {
 }
 
 
+.uiBox {
+    background-color: #DFF8EB;
+    margin: 10px;
+    border-radius: 5px;
+}
+
+  
+.uiBoxInterior {
+    padding: 10px;
+}
+
+
+.uiBoxLinks a {
+    color: black;
+    text-decoration: none;
+}
+
+  
+.uiHeaders {
+    margin-top:0px;
+    margin-bottom:10px;
+}
+
+
+
+
+
 #buttonLogin {
    margin-right:10px;
 }
@@ -40,11 +67,12 @@ body {
 
 
 #overCanvas {
-    position:absolute; 
+    position:absolute;
     left:0; 
     top:0; 
     margin:0; 
     padding:0; 
     width:100%;
-    height:100%; 
 }
+
+
