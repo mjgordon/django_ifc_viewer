@@ -1,1 +1,81 @@
-Hello Wolrd
+<!DOCTYPE html>
+{% load static %}
+
+<html>
+    <head>
+        <title>Wall DB</title>
+        <link rel="stylesheet" href="{% static 'base.css' %}">
+        <link rel="stylesheet" href="{% static 'zhaw/style.css' %}">
+        
+        
+    </head>
+    <body>
+        <div class="uiBox uiBoxFloating" id="uiModelInfo">
+            <div class="uiBoxInterior">
+                <h1>
+                    Wall Database Demo
+                </h1>
+
+                <button id="buttonLoadModel">Load</button>
+                <button id="buttonUnloadModel">Unload</button>
+
+                {% if loaded %}
+  
+                {% else %}
+                    
+                {% endif %}
+                <h2 id="projectNameLabel"></h2>
+                <h3 id="projectAuthorLabel"></h3>
+
+            </div>
+
+        </div>
+
+        <div class="uiBox uiBoxFloating" id="uiElementInfo">
+            <div class="uiBoxInterior">
+                <h1>
+                    Wall Elements
+                </h1>
+                <label for="selectTypes"> Wall Type</label>
+                <select  id="selectTypes" >
+                </select>
+                
+
+                <div>
+                    <table class="tableWalls">
+                      <thead class="trWallRow">
+                        <th>Step Id</th>
+                        <th>Element Name</th>
+                        <th>Type Name</th>
+                      </thead>
+                    </table>
+                  </div>
+                  <div id="tableWallsScroll">
+                    <table id="tableWallsData" class="tableWalls"> </table>
+                  </div>
+            </div>
+
+        </div>
+
+        <div class="uiBox uiBoxFloating" id="uiEditor">
+            <div class="uiBoxInterior">
+                <h1>
+                    Edit
+                </h1>
+                <h2>
+                    Editing Wall Id:
+                </h2>
+                <div id="editIdLabel"></div>
+                <h2>Set Name</h2>
+                <textarea></textarea>
+                <h2>Set Type</h2>
+                <label for="changeTypes"> New Type</label>
+                <select  id="changeTypes" >
+            </div>
+
+        </div>
+
+        <script type="module" src="{% static 'zhaw/zhaw.js' %}"></script>
+
+    </body>
+</html>

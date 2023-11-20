@@ -1,3 +1,7 @@
 from django.contrib import admin
 
-# Register your models here.
+
+from .models import IfcModel, WallElement
+
+admin.site.register(IfcModel)
+admin.site.register(WallElement)

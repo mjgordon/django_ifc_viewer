@@ -1,0 +1,54 @@
+.tableWalls {
+    border-collapse: collapse;
+    table-layout:fixed;
+    width:100%;
+    word-wrap: break-word;
+  }
+  
+  
+  .tdWallId {
+    text-align: center;
+  }
+  
+  
+  .tdWallName {
+    text-align: center;
+  }
+  
+  
+  .tdWallType {
+    text-align: right;
+  }
+  
+  
+  .trWallRow {
+    border: 1px solid gray;
+  }
+
+.uiBoxFloating {
+    float:left;
+    height:90vh;
+}
+
+#uiModelInfo {
+    width:25vw; 
+    left:0px; 
+    top: 50px;
+}
+
+#uiElementInfo {
+    width:40vw; 
+    left:0px; 
+    top: 50px
+}
+
+#uiEditor {
+    width:25vw; 
+    left:0px; 
+    top: 50px
+}
+
+#tableWallsScroll {
+    height:50vw; 
+    overflow:auto;
+}
