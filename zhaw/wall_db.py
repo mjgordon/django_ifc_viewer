@@ -44,16 +44,16 @@ def register_file(ifc):
     walls = ifc.by_type("IfcWall")
     print(len(walls))
 
-    print(walls[0].get_info())
-    print(walls[0].Name)
+    #print(walls[0].get_info())
+    #print(walls[0].Name)
 
     for wall in walls:
         step_id =  wall.id()
         name = wall.Name
         type_name = wall.ObjectType
-        print(step_id)
-        print(wall.ObjectType)
-        print(ifcopenshell.util.element.get_type(wall))
+        #print(step_id)
+        #print(wall.ObjectType)
+        #print(ifcopenshell.util.element.get_type(wall))
 
         wall = WallElement(parent_model = model, express_id = step_id,element_name=name, type_name=type_name)
         wall.save()

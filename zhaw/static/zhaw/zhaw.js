@@ -36,8 +36,42 @@ function setupUI() {
         xhr.send(null);
     });
 
+    const editName = document.getElementById("editName")
+    editName.addEventListener("keydown", (event) => {
+        if (event.which === 13) {
+            if (!event.repeat) {
+                console.log(editName.value)
+                
+
+                if (currentExpressId == null) {
+                    return;
+                }
+                var xhr = new XMLHttpRequest();
+                var url = "/zhaw/update_name"
+                xhr.open("POST", url, true);
+                xhr.setRequestHeader('Content-Type', 'application/json');
+            
+                xhr.addEventListener("load",function() {
+                    reloadData()
+                });
+            
+                xhr.send(JSON.stringify({
+                    express_id:currentExpressId,
+                    new_name:editName.value
+                }));
+                
+                event.target.value = "";
+            }
+    
+            event.preventDefault(); // Prevents the addition of a new line in the text field
+        }
+    });
+
     const selectTypes = document.getElementById('selectTypes')
     selectTypes.onchange=selectCallback
+
+    const changeTypes = document.getElementById('changeTypes')
+    changeTypes.onchange=changeTypeCallback
 
     
 
@@ -92,11 +126,13 @@ function updateWallData(walls, changeSelector) {
         }
     
         const selectTypes = document.getElementById('selectTypes')
+        const changeTypes = document.getElementById('changeTypes')
         var inner = ""
         typeSet.forEach((typeName) => {
             inner += `<option value="${typeName}">${typeName}</option>`
         });
         selectTypes.innerHTML = inner;
+        changeTypes.innerHTML = inner;
     }
     
     
@@ -122,7 +158,7 @@ function updateWallData(walls, changeSelector) {
   
         row.onclick = (event) => {
             let express_id = wall.fields.express_id;
-
+            setEditor(express_id)
             console.log(express_id)
         }
       }
@@ -146,6 +182,30 @@ function selectCallback() {
     console.log("Finding : " + selectTypes.value)
 }
 
-function setEditor(express_id) {
+function changeTypeCallback() {
+    if (currentExpressId == null) {
+        return;
+    }
+    const changeTypes = document.getElementById('changeTypes')
+    var xhr = new XMLHttpRequest();
+    var url = "/zhaw/update_type"
+    // + currentExpressId + "/" + changeTypes.value
+    xhr.open("POST", url, true);
+    xhr.setRequestHeader('Content-Type', 'application/json');
 
+    xhr.addEventListener("load",function() {
+        reloadData()
+    });
+
+    xhr.send(JSON.stringify({
+        express_id:currentExpressId,
+        new_type:changeTypes.value
+    }));
+    
+}
+
+function setEditor(expressId) {
+    const editIdLabel = document.getElementById('editIdLabel')
+    editIdLabel.innerHTML = expressId
+    currentExpressId = expressId
 }
